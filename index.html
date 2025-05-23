@@ -4,140 +4,754 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mandat Analytics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-bg: #0a0a0a;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --text-light: rgba(255, 255, 255, 0.9);
+      --text-muted: rgba(255, 255, 255, 0.6);
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0;
-      color: #333;
-      background: #f4f6f8;
+      background: var(--dark-bg);
+      color: var(--text-light);
+      overflow-x: hidden;
+      line-height: 1.6;
     }
 
+    /* Animated background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    .bg-animation::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
+    }
+
+    /* Glass morphism header */
     header {
-      background: #1e1e2f;
-      color: white;
-      padding: 2rem;
-      text-align: center;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    header.scrolled {
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(30px);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     nav {
-      margin-top: 1rem;
+      display: flex;
+      gap: 2rem;
     }
 
     nav a {
-      color: #ccc;
-      margin: 0 1rem;
+      color: var(--text-muted);
       text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
     }
 
     nav a:hover {
-      color: white;
+      color: var(--text-light);
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      transform: translateY(-2px);
     }
 
-    section {
-      padding: 3rem 1rem;
-      max-width: 1000px;
-      margin: auto;
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--accent-gradient);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
     }
 
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #1e1e2f;
+    nav a:hover::after {
+      width: 80%;
     }
 
-    .placeholder-img {
-      background: #ccc;
-      width: 100%;
-      height: 200px;
-      margin-bottom: 1rem;
-      border-radius: 6px;
-    }
-
-    .offerings {
+    /* Hero section */
+    .hero {
+      height: 100vh;
       display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-    }
-
-    .offer-box {
-      flex: 1 1 45%;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    footer {
-      background: #1e1e2f;
-      color: white;
-      padding: 2rem 1rem;
+      align-items: center;
+      justify-content: center;
       text-align: center;
+      position: relative;
     }
 
-    @media (max-width: 768px) {
-      .offerings {
-        flex-direction: column;
+    .hero-content {
+      max-width: 800px;
+      padding: 0 2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease 0.7s both;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--secondary-gradient);
+      border: none;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease 0.9s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    /* Section styles */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glass cards */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--primary-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .glass-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* Services grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      position: relative;
+      height: 300px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .service-card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card-front {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+    }
+
+    .card-back {
+      background: var(--secondary-gradient);
+      transform: rotateY(180deg);
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    /* About section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-radius: 15px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Contact section */
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 3rem;
+    }
+
+    .contact-form {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      color: var(--text-light);
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-gradient);
+      box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
       }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+
+      .about-content,
+      .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .stats-container {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 4rem 1rem;
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark-bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-gradient);
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
+  <div class="bg-animation"></div>
 
-  <header>
-    <h1>Mandat Analytics</h1>
-    <nav>
-      <a href="#about">Who Are We?</a>
-      <a href="#services">What We Offer</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <header id="header">
+    <div class="header-content">
+      <div class="logo">Mandat Analytics</div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Data That Drives Impact</h1>
+      <p class="hero-subtitle">Empowering political campaigns, sports teams, and SMEs across Southeast Asia with strategic, data-driven insights that turn information into decisive action.</p>
+      <a href="#services" class="cta-button">Explore Our Services</a>
+    </div>
+  </section>
+
   <section id="about">
-    <h2>Who Are We?</h2>
-    <div class="placeholder-img"></div>
-    <p>
-      Mandat Analytics Sdn. Bhd. is a Malaysia-based data consultancy empowering political campaigns, sports teams, and SMEs in Southeast Asia with strategic, data-driven insights. We combine machine learning, behavioral science, and sector-specific knowledge to turn data into decisive action.
-    </p>
+    <h2 class="section-title fade-in">Who We Are</h2>
+    <div class="about-content">
+      <div class="about-text fade-in">
+        <p>Mandat Analytics Sdn. Bhd. is a Malaysia-based data consultancy that combines machine learning, behavioral science, and sector-specific knowledge to deliver transformative insights.</p>
+        <p>Our team of data scientists and analysts specialize in turning complex data into clear, actionable strategies that drive real results for our clients across the region.</p>
+      </div>
+      <div class="stats-container fade-in">
+        <div class="stat-item">
+          <div class="stat-number" data-target="150">0</div>
+          <div>Projects Completed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="5">0</div>
+          <div>Countries Served</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="95">0</div>
+          <div>Client Satisfaction %</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-target="24">0</div>
+          <div>Team Members</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="services">
-    <h2>What We Offer</h2>
-    <div class="offerings">
-      <div class="offer-box">
-        <h3>Consulting Projects</h3>
-        <p>Custom analytics reports for political, sports, and SME strategy execution.</p>
+    <h2 class="section-title fade-in">What We Offer</h2>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="service-icon">📊</div>
+            <h3>Consulting Projects</h3>
+            <p>Custom analytics reports for strategic execution</p>
+          </div>
+          <div class="card-back">
+            <h3>Consulting Projects</h3>
+            <p>Deep-dive analytics that provide actionable insights for political campaigns, sports strategy, and business growth. Our consultants work directly with your team to ensure maximum impact.</p>
+          </div>
+        </div>
       </div>
-      <div class="offer-box">
-        <h3>Retainer Packages</h3>
-        <p>Ongoing analytics partnerships to support continuous decision-making.</p>
+
+      <div class="service-card fade-in">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="service-icon">🔄</div>
+            <h3>Retainer Packages</h3>
+            <p>Ongoing analytics partnerships</p>
+          </div>
+          <div class="card-back">
+            <h3>Retainer Packages</h3>
+            <p>Continuous support and monitoring with monthly reports, trend analysis, and strategic recommendations. Perfect for organizations needing consistent data-driven guidance.</p>
+          </div>
+        </div>
       </div>
-      <div class="offer-box">
-        <h3>Dashboards & Tools</h3>
-        <p>Interactive dashboards and proprietary software for internal client use.</p>
+
+      <div class="service-card fade-in">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="service-icon">📱</div>
+            <h3>Dashboards & Tools</h3>
+            <p>Interactive dashboards and proprietary software</p>
+          </div>
+          <div class="card-back">
+            <h3>Dashboards & Tools</h3>
+            <p>Custom-built dashboards and analytical tools that put the power of data visualization in your hands. Real-time monitoring and intuitive interfaces designed for your specific needs.</p>
+          </div>
+        </div>
       </div>
-      <div class="offer-box">
-        <h3>Training & Workshops</h3>
-        <p>Programs that build data literacy and internal analytics capabilities.</p>
+
+      <div class="service-card fade-in">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="service-icon">🎓</div>
+            <h3>Training & Workshops</h3>
+            <p>Build data literacy and internal capabilities</p>
+          </div>
+          <div class="card-back">
+            <h3>Training & Workshops</h3>
+            <p>Comprehensive training programs that empower your team with data literacy skills. From basic analytics to advanced machine learning concepts, we build lasting capabilities.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2>Contact</h2>
-    <div class="placeholder-img"></div>
-    <p>Email us at <a href="mailto:hello@mandatanalytics.com">hello@mandatanalytics.com</a></p>
-    <p>Follow us on LinkedIn: <a href="#">@MandatAnalytics</a></p>
+    <h2 class="section-title fade-in">Get In Touch</h2>
+    <div class="contact-content">
+      <div class="contact-form fade-in">
+        <h3>Start Your Data Journey</h3>
+        <form>
+          <div class="form-group">
+            <input type="text" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <input type="email" placeholder="Your Email" required>
+          </div>
+          <div class="form-group">
+            <input type="text" placeholder="Company/Organization">
+          </div>
+          <div class="form-group">
+            <textarea placeholder="Tell us about your project..." rows="5" required></textarea>
+          </div>
+          <button type="submit" class="cta-button">Send Message</button>
+        </form>
+      </div>
+      <div class="glass-card fade-in">
+        <h3>Contact Information</h3>
+        <p style="margin: 2rem 0;">Ready to transform your data into actionable insights? Let's discuss how we can help drive your success.</p>
+        <p><strong>Email:</strong> hello@mandatanalytics.com</p>
+        <p><strong>LinkedIn:</strong> @MandatAnalytics</p>
+        <p><strong>Location:</strong> Kuala Lumpur, Malaysia</p>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+          <p><strong>Response Time:</strong> Within 24 hours</p>
+          <p><strong>Consultation:</strong> Free initial assessment</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <footer>
-    &copy; 2025 Mandat Analytics Sdn. Bhd. | Data That Drives Impact
+  <footer style="text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--glass-border);">
+    <p>&copy; 2025 Mandat Analytics Sdn. Bhd. | Data That Drives Impact</p>
   </footer>
 
+  <script>
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = target.offsetTop - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Animated counters for stats
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16);
+      const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(start);
+        }
+      }, 16);
+    }
+
+    // Trigger counter animation when stats section is visible
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.stat-number');
+          counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            animateCounter(counter, target);
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsContainer = document.querySelector('.stats-container');
+    if (statsContainer) {
+      statsObserver.observe(statsContainer);
+    }
+
+    // Form submission
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const button = form.querySelector('.cta-button');
+      const originalText = button.textContent;
+      button.textContent = 'Sending...';
+      button.style.opacity = '0.7';
+      
+      // Simulate form submission
+      setTimeout(() => {
+        button.textContent = 'Message Sent!';
+        button.style.background = 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.style.opacity = '1';
+          button.style.background = '';
+          form.reset();
+        }, 2000);
+      }, 1500);
+    });
+
+    // Add some floating particles
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: rgba(79, 172, 254, 0.6);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+        left: ${Math.random() * 100}vw;
+        top: 100vh;
+        animation: floatUp ${3 + Math.random() * 4}s linear forwards;
+      `;
+      document.body.appendChild(particle);
+      
+      setTimeout(() => {
+        particle.remove();
+      }, 7000);
+    }
+
+    // Add CSS for particle animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes floatUp {
+        to {
+          transform: translateY(-100vh) translateX(${Math.random() * 200 - 100}px);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Create particles periodically
+    setInterval(createParticle, 2000);
+  </script>
 </body>
 </html>
