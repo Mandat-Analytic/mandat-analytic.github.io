@@ -1,0 +1,5 @@
+title: Mandat Analytics
+description: Insights and articles powered by data.
+baseurl: "" # Keep blank for user.github.io site
+url: "https://mandat-analytic.github.io"
+theme: minima  # You can change this later
