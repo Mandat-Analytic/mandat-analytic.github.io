@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mandat Analytics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
@@ -13,20 +13,30 @@
     }
 
     :root {
-      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-      --dark-bg: #0a0a0a;
-      --glass-bg: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.2);
-      --text-light: rgba(255, 255, 255, 0.9);
-      --text-muted: rgba(255, 255, 255, 0.6);
+      --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      --success-gradient: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      
+      --light-bg: #fafafa;
+      --white: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(59, 130, 246, 0.1);
+      --shadow-light: rgba(59, 130, 246, 0.08);
+      --shadow-medium: rgba(59, 130, 246, 0.15);
+      --shadow-heavy: rgba(59, 130, 246, 0.25);
+      
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-light: #e2e8f0;
+      --border-medium: #cbd5e1;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--dark-bg);
-      color: var(--text-light);
+      background: var(--light-bg);
+      color: var(--text-primary);
       overflow-x: hidden;
       line-height: 1.6;
     }
@@ -39,9 +49,9 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(45deg, #0a0a0a, #1a1a2e, #16213e);
+      background: linear-gradient(45deg, #fafafa, #f8fafc, #f1f5f9);
       background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
+      animation: gradientShift 20s ease infinite;
     }
 
     .bg-animation::before {
@@ -51,10 +61,24 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                  radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
+      background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+      animation: float 25s ease-in-out infinite;
+    }
+
+    .bg-animation::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, transparent 2px, transparent 0),
+        radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.03) 1px, transparent 0);
+      background-size: 50px 50px;
+      animation: patternShift 30s linear infinite;
     }
 
     @keyframes gradientShift {
@@ -63,12 +87,17 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      33% { transform: translateY(-20px) rotate(1deg); }
-      66% { transform: translateY(10px) rotate(-1deg); }
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      33% { transform: translateY(-30px) rotate(2deg); opacity: 0.8; }
+      66% { transform: translateY(15px) rotate(-1deg); opacity: 0.9; }
     }
 
-    /* Glass morphism header */
+    @keyframes patternShift {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(50px) translateY(50px); }
+    }
+
+    /* Professional header */
     header {
       position: fixed;
       top: 0;
@@ -76,18 +105,19 @@
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);
-      padding: 1rem 2rem;
+      padding: 1.2rem 2rem;
       z-index: 1000;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 20px var(--shadow-light);
     }
 
     header.scrolled {
-      background: rgba(10, 10, 10, 0.9);
-      backdrop-filter: blur(30px);
+      background: var(--white);
+      box-shadow: 0 8px 30px var(--shadow-medium);
     }
 
     .header-content {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -95,99 +125,152 @@
     }
 
     .logo {
-      font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
       font-weight: 700;
       background: var(--primary-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover::after {
+      transform: scaleX(1);
     }
 
     nav {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
     }
 
     nav a {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
       font-weight: 500;
       position: relative;
       transition: all 0.3s ease;
-      padding: 0.5rem 1rem;
-      border-radius: 25px;
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.95rem;
     }
 
     nav a:hover {
-      color: var(--text-light);
-      background: var(--glass-bg);
-      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      background: var(--white);
+      box-shadow: 0 4px 15px var(--shadow-light);
       transform: translateY(-2px);
     }
 
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--accent-gradient);
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
+    nav a.active {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: 0 6px 20px var(--shadow-medium);
     }
 
-    nav a:hover::after {
-      width: 80%;
-    }
-
-    /* Hero section */
+    /* Creative hero section */
     .hero {
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
       position: relative;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
     }
 
     .hero-content {
-      max-width: 800px;
-      padding: 0 2rem;
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--success-gradient);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      animation: fadeInUp 1s ease 0.3s both;
+      box-shadow: 0 4px 15px var(--shadow-light);
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      color: var(--text-primary);
+      animation: fadeInUp 1s ease 0.5s both;
+    }
+
+    .hero h1 .gradient-text {
       background: var(--primary-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: fadeInUp 1s ease 0.5s both;
     }
 
     .hero-subtitle {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      line-height: 1.6;
       animation: fadeInUp 1s ease 0.7s both;
     }
 
+    .cta-group {
+      display: flex;
+      gap: 1.5rem;
+      animation: fadeInUp 1s ease 0.9s both;
+    }
+
     .cta-button {
-      display: inline-block;
-      padding: 1rem 2rem;
-      background: var(--secondary-gradient);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1.2rem 2.5rem;
+      background: var(--primary-gradient);
       border: none;
       border-radius: 50px;
       color: white;
       text-decoration: none;
       font-weight: 600;
+      font-size: 1rem;
       transition: all 0.3s ease;
-      animation: fadeInUp 1s ease 0.9s both;
       position: relative;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 8px 25px var(--shadow-medium);
+    }
+
+    .cta-button.secondary {
+      background: var(--white);
+      color: var(--text-primary);
+      border: 2px solid var(--border-medium);
+      box-shadow: 0 4px 15px var(--shadow-light);
     }
 
     .cta-button::before {
@@ -197,166 +280,70 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
       transition: left 0.5s;
     }
 
     .cta-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 35px var(--shadow-heavy);
     }
 
     .cta-button:hover::before {
       left: 100%;
     }
 
-    /* Section styles */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+    .cta-button.secondary:hover {
+      background: var(--primary-gradient);
+      color: white;
+      border-color: transparent;
+    }
+
+    /* Hero visual */
+    .hero-visual {
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInUp 1s ease 0.4s both;
     }
 
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 3rem;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Glass cards */
-    .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
+    .hero-chart {
+      background: var(--white);
       border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.3s ease;
+      padding: 3rem;
+      box-shadow: 0 20px 60px var(--shadow-medium);
       position: relative;
       overflow: hidden;
+      max-width: 500px;
+      width: 100%;
     }
 
-    .glass-card::before {
+    .hero-chart::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 1px;
+      height: 4px;
       background: var(--primary-gradient);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
     }
 
-    .glass-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    }
-
-    .glass-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    /* Services grid */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
-    }
-
-    .service-card {
-      position: relative;
-      height: 300px;
-      perspective: 1000px;
-    }
-
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .service-card:hover .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 20px;
+    .chart-header {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      justify-content: between;
       align-items: center;
-      padding: 2rem;
+      margin-bottom: 2rem;
     }
 
-    .card-front {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-    }
-
-    .card-back {
-      background: var(--secondary-gradient);
-      transform: rotateY(180deg);
-    }
-
-    .service-icon {
-      width: 60px;
-      height: 60px;
-      margin-bottom: 1rem;
-      background: var(--accent-gradient);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    /* About section */
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-      margin-top: 3rem;
-    }
-
-    .about-text {
+    .chart-title {
+      font-weight: 600;
+      color: var(--text-primary);
       font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--text-muted);
     }
 
-    .stats-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
-    }
-
-    .stat-item {
-      text-align: center;
-      padding: 1.5rem;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 15px;
-      border: 1px solid var(--glass-border);
-    }
-
-    .stat-number {
-      font-size: 2rem;
+    .chart-value {
+      font-size: 2.5rem;
       font-weight: 700;
       background: var(--primary-gradient);
       -webkit-background-clip: text;
@@ -364,49 +351,481 @@
       background-clip: text;
     }
 
-    /* Contact section */
-    .contact-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-top: 3rem;
+    .chart-bars {
+      display: flex;
+      align-items: end;
+      gap: 0.5rem;
+      height: 200px;
     }
 
-    .contact-form {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 2rem;
+    .chart-bar {
+      background: var(--secondary-gradient);
+      border-radius: 4px 4px 0 0;
+      width: 100%;
+      animation: growUp 1.5s ease 1.2s both;
+      position: relative;
     }
 
-    .form-group {
+    .chart-bar:nth-child(1) { height: 60%; }
+    .chart-bar:nth-child(2) { height: 85%; }
+    .chart-bar:nth-child(3) { height: 40%; }
+    .chart-bar:nth-child(4) { height: 95%; }
+    .chart-bar:nth-child(5) { height: 75%; }
+    .chart-bar:nth-child(6) { height: 30%; }
+    .chart-bar:nth-child(7) { height: 100%; }
+
+    /* Floating elements */
+    .floating-element {
+      position: absolute;
+      background: var(--white);
+      border-radius: 15px;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 10px 30px var(--shadow-light);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-element:nth-child(1) {
+      top: 20%;
+      right: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      bottom: 30%;
+      left: 5%;
+      animation-delay: 2s;
+    }
+
+    .floating-element:nth-child(3) {
+      top: 60%;
+      right: 20%;
+      animation-delay: 4s;
+    }
+
+    /* Section styles */
+    section {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .section-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .section-badge {
+      display: inline-block;
+      background: var(--accent-gradient);
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      font-weight: 600;
       margin-bottom: 1.5rem;
     }
 
-    .form-group input,
-    .form-group textarea {
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* About section */
+    .about-main {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 6rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+
+    .about-content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px var(--shadow-light);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-light);
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px var(--shadow-medium);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--secondary-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .about-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-image {
       width: 100%;
-      padding: 0.75rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--glass-border);
-      border-radius: 10px;
-      color: var(--text-light);
+      height: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 50px var(--shadow-medium);
+      position: relative;
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .about-image:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+      z-index: 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      padding: 2rem 1.5rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 30px var(--shadow-light);
+      transition: all 0.3s ease;
+      position: relative;
+      border: 1px solid var(--border-light);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px var(--shadow-medium);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    /* Creative services section */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      box-shadow: 0 10px 40px var(--shadow-light);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: var(--primary-gradient);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.4s ease;
+      z-index: 1;
+    }
+
+    .service-card:hover::before {
+      transform: scaleY(1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 25px 60px var(--shadow-heavy);
+    }
+
+    .service-card:hover .service-content {
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-card:hover .service-icon {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      background: var(--light-bg);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-content {
+      position: relative;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    .service-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-features {
+      list-style: none;
+      text-align: left;
+    }
+
+    .service-features li {
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .service-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Contact section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      margin-top: 4rem;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 15px 50px var(--shadow-light);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--primary-gradient);
+    }
+
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: var(--light-bg);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      color: var(--text-primary);
       font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
     }
 
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
-      border-color: var(--accent-gradient);
-      box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+      background: var(--white);
+    }
+
+    .contact-info {
+      padding: 2rem 0;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: var(--white);
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 30px var(--shadow-light);
+      transition: all 0.3s ease;
+    }
+
+    .contact-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 15px 40px var(--shadow-medium);
+    }
+
+    .contact-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--secondary-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--border-light);
+      padding: 4rem 2rem 2rem;
+      text-align: center;
+      box-shadow: 0 -4px 20px var(--shadow-light);
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-section h4 {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .footer-section p,
+    .footer-section a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      line-height: 1.6;
+    }
+
+    .footer-section a:hover {
+      color: var(--text-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-light);
+      padding-top: 2rem;
+      color: var(--text-muted);
     }
 
     /* Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
       }
       to {
         opacity: 1;
@@ -414,10 +833,19 @@
       }
     }
 
+    @keyframes growUp {
+      from {
+        transform: scaleY(0);
+      }
+      to {
+        transform: scaleY(1);
+      }
+    }
+
     .fade-in {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
     }
 
     .fade-in.visible {
@@ -426,43 +854,74 @@
     }
 
     /* Mobile responsiveness */
+    @media (max-width: 1024px) {
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+      }
+      
+      .about-main,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
     @media (max-width: 768px) {
       .header-content {
         flex-direction: column;
         gap: 1rem;
+        padding: 1rem 0;
       }
 
       nav {
         gap: 1rem;
       }
 
-      .about-content,
-      .contact-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+      nav a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
       }
 
-      .stats-container {
+      .stats-grid {
         grid-template-columns: 1fr;
       }
 
       section {
         padding: 4rem 1rem;
       }
+
+      .cta-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .floating-element {
+        display: none;
+      }
     }
 
-    /* Scrollbar styling */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--dark-bg);
+      background: var(--light-bg);
     }
 
     ::-webkit-scrollbar-thumb {
       background: var(--primary-gradient);
       border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary-gradient);
     }
   </style>
 </head>
@@ -481,96 +940,175 @@
   </header>
 
   <section class="hero">
-    <div class="hero-content">
-      <h1>Data That Drives Impact</h1>
-      <p class="hero-subtitle">Empowering political campaigns, sports teams, and SMEs across Southeast Asia with strategic, data-driven insights that turn information into decisive action.</p>
-      <a href="#services" class="cta-button">Explore Our Services</a>
-    </div>
-  </section>
-
-  <section id="about">
-    <h2 class="section-title fade-in">Who We Are</h2>
-    <div class="about-content">
-      <div class="about-text fade-in">
-        <p>Mandat Analytics Sdn. Bhd. is a Malaysia-based data consultancy that combines machine learning, behavioral science, and sector-specific knowledge to deliver transformative insights.</p>
-        <p>Our team of data scientists and analysts specialize in turning complex data into clear, actionable strategies that drive real results for our clients across the region.</p>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">🚀 Southeast Asia's Premier Data Consultancy</div>
+        <h1>
+          <span class="gradient-text">Data That Drives</span><br>
+          Real Impact
+        </h1>
+        <p class="hero-subtitle">
+          Empowering political campaigns, sports teams, and SMEs across Southeast Asia with strategic, data-driven insights that transform information into decisive competitive advantages.
+        </p>
+        <div class="cta-group">
+          <a href="#services" class="cta-button">
+            🔍 Explore Services
+          </a>
+          <a href="#contact" class="cta-button secondary">
+            📞 Schedule Consultation
+          </a>
+        </div>
       </div>
-      <div class="stats-container fade-in">
-        <div class="stat-item">
-          <div class="stat-number" data-target="150">0</div>
-          <div>Projects Completed</div>
+    
+      
+      <div class="hero-visual">
+        <div class="hero-chart">
+          <div class="chart-header">
+            <div class="chart-title">Data Impact Metrics</div>
+          </div>
+          <div class="chart-value">+247%</div>
+          <p style="color: var(--text-muted); margin-bottom: 2rem;">Average client growth</p>
+          <div class="chart-bars">
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+            <div class="chart-bar"></div>
+          </div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="5">0</div>
-          <div>Countries Served</div>
+        
+        <div class="floating-element">
+          <div style="font-weight: 600; color: var(--text-primary);">📊 Real-time Analytics</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="95">0</div>
-          <div>Client Satisfaction %</div>
+        <div class="floating-element">
+          <div style="font-weight: 600; color: var(--text-primary);">🎯 Strategic Insights</div>
         </div>
-        <div class="stat-item">
-          <div class="stat-number" data-target="24">0</div>
-          <div>Team Members</div>
+        <div class="floating-element">
+          <div style="font-weight: 600; color: var(--text-primary);">🏆 Proven Results</div>
+        </div>
+      </div>
+      
+      <div class="about-grid">
+        <div class="about-content fade-in">
+          <div class="about-text">
+            <p>Mandat Analytics Sdn. Bhd. stands at the forefront of data-driven transformation in Southeast Asia. Our multidisciplinary team of data scientists, behavioral analysts, and industry specialists work collaboratively to unlock the hidden potential within your data.</p>
+            
+            <p>We don't just analyze numbers – we craft narratives that drive strategic decisions and deliver measurable outcomes across political campaigns, sports organizations, and growing businesses throughout the region.</p>
+          </div>
+          
+          <div class="about-features">
+            <div class="feature-item">
+              <div class="feature-icon">🧠</div>
+              <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Advanced Analytics</h4>
+                <p style="color: var(--text-muted); margin: 0;">Machine learning and AI-powered insights</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎯</div>
+              <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Strategic Focus</h4>
+                <p style="color: var(--text-muted); margin: 0;">Sector-specific expertise and solutions</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🌏</div>
+              <div>
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Regional Expertise</h4>
+                <p style="color: var(--text-muted); margin: 0;">Deep understanding of Southeast Asian markets</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-grid fade-in">
+          <div class="stat-card">
+            <div class="stat-number" data-target="150">0</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="5">0</div>
+            <div class="stat-label">Countries Served</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="95">0</div>
+            <div class="stat-label">Client Satisfaction %</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number" data-target="24">0</div>
+            <div class="stat-label">Expert Team Members</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <section id="services">
-    <h2 class="section-title fade-in">What We Offer</h2>
-    <div class="services-grid">
-      <div class="service-card fade-in">
-        <div class="card-inner">
-          <div class="card-front">
-            <div class="service-icon">📊</div>
+    <div class="section-container">
+      <div class="section-header fade-in">
+        <div class="section-badge">🎯 Our Solutions</div>
+        <h2 class="section-title">What We Offer</h2>
+        <p class="section-subtitle">
+          Comprehensive data solutions tailored to your specific industry needs and strategic objectives.
+        </p>
+      </div>
+      
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <div class="service-icon">📊</div>
+          <div class="service-content">
             <h3>Consulting Projects</h3>
-            <p>Custom analytics reports for strategic execution</p>
-          </div>
-          <div class="card-back">
-            <h3>Consulting Projects</h3>
-            <p>Deep-dive analytics that provide actionable insights for political campaigns, sports strategy, and business growth. Our consultants work directly with your team to ensure maximum impact.</p>
+            <p>Custom analytics reports designed for strategic execution and measurable impact.</p>
+            <ul class="service-features">
+              <li>In-depth data analysis and modeling</li>
+              <li>Strategic recommendations and roadmap</li>
+              <li>Implementation support and guidance</li>
+              <li>Performance tracking and optimization</li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      <div class="service-card fade-in">
-        <div class="card-inner">
-          <div class="card-front">
-            <div class="service-icon">🔄</div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🔄</div>
+          <div class="service-content">
             <h3>Retainer Packages</h3>
-            <p>Ongoing analytics partnerships</p>
-          </div>
-          <div class="card-back">
-            <h3>Retainer Packages</h3>
-            <p>Continuous support and monitoring with monthly reports, trend analysis, and strategic recommendations. Perfect for organizations needing consistent data-driven guidance.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="service-card fade-in">
-        <div class="card-inner">
-          <div class="card-front">
-            <div class="service-icon">📱</div>
-            <h3>Dashboards & Tools</h3>
-            <p>Interactive dashboards and proprietary software</p>
-          </div>
-          <div class="card-back">
-            <h3>Dashboards & Tools</h3>
-            <p>Custom-built dashboards and analytical tools that put the power of data visualization in your hands. Real-time monitoring and intuitive interfaces designed for your specific needs.</p>
+            <p>Ongoing analytics partnerships with continuous monitoring and strategic insights.</p>
+            <ul class="service-features">
+              <li>Monthly performance reports</li>
+              <li>Trend analysis and forecasting</li>
+              <li>Strategic consultation sessions</li>
+              <li>Priority support and rapid response</li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      <div class="service-card fade-in">
-        <div class="card-inner">
-          <div class="card-front">
-            <div class="service-icon">🎓</div>
-            <h3>Training & Workshops</h3>
-            <p>Build data literacy and internal capabilities</p>
+        <div class="service-card fade-in">
+          <div class="service-icon">📱</div>
+          <div class="service-content">
+            <h3>Dashboards & Tools</h3>
+            <p>Interactive dashboards and proprietary software solutions for real-time insights.</p>
+            <ul class="service-features">
+              <li>Custom dashboard development</li>
+              <li>Real-time data visualization</li>
+              <li>User-friendly interface design</li>
+              <li>Mobile-responsive solutions</li>
+            </ul>
           </div>
-          <div class="card-back">
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">🎓</div>
+          <div class="service-content">
             <h3>Training & Workshops</h3>
-            <p>Comprehensive training programs that empower your team with data literacy skills. From basic analytics to advanced machine learning concepts, we build lasting capabilities.</p>
+            <p>Build data literacy and internal capabilities within your organization.</p>
+            <ul class="service-features">
+              <li>Data literacy training programs</li>
+              <li>Advanced analytics workshops</li>
+              <li>Custom curriculum development</li>
+              <li>Certification and ongoing support</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -578,42 +1116,120 @@
   </section>
 
   <section id="contact">
-    <h2 class="section-title fade-in">Get In Touch</h2>
-    <div class="contact-content">
-      <div class="contact-form fade-in">
-        <h3>Start Your Data Journey</h3>
-        <form action="https://formsubmit.co/afiq.akmal@mandatanalytic.com" method="POST">
-          <div class="form-group">
-            <input type="text" name="name" placeholder="Your Name" required>
-          </div>
-          <div class="form-group">
-            <input type="email" name="email" placeholder="Your Email" required>
-          </div>
-          <div class="form-group">
-            <input type="text" name="company" placeholder="Company/Organization">
-          </div>
-          <div class="form-group">
-            <textarea name="message" placeholder="Tell us about your project..." rows="5" required></textarea>
-          </div>
-          <button type="submit" class="cta-button">Send Message</button>
-        </form>
+    <div class="section-container">
+      <div class="section-header fade-in">
+        <div class="section-badge">📞 Let's Connect</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="section-subtitle">
+          Ready to transform your data into strategic advantages? Let's discuss how we can drive your success.
+        </p>
       </div>
-      <div class="glass-card fade-in">
-        <h3>Contact Information</h3>
-        <p style="margin: 2rem 0;">Ready to transform your data into actionable insights? Let's discuss how we can help drive your success.</p>
-        <p><strong>Email:</strong> hello@mandatanalytics.com</p>
-        <p><strong>LinkedIn:</strong> @MandatAnalytics</p>
-        <p><strong>Location:</strong> Kuala Lumpur, Malaysia</p>
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
-          <p><strong>Response Time:</strong> Within 24 hours</p>
-          <p><strong>Consultation:</strong> Free initial assessment</p>
+      
+      <div class="contact-grid">
+        <div class="contact-form fade-in">
+          <h3 style="margin-bottom: 2rem; color: var(--text-primary);">Start Your Data Journey</h3>
+          <form action="https://formsubmit.co/afiq.akmal@mandatanalytic.com" method="POST">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Company/Organization</label>
+              <input type="text" id="company" name="company">
+            </div>
+            <div class="form-group">
+              <label for="service">Service Interest</label>
+              <select id="service" name="service">
+                <option value="">Select a service</option>
+                <option value="consulting">Consulting Projects</option>
+                <option value="retainer">Retainer Packages</option>
+                <option value="dashboards">Dashboards & Tools</option>
+                <option value="training">Training & Workshops</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Project Details</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell us about your project, challenges, and objectives..." required></textarea>
+            </div>
+            <button type="submit" class="cta-button">Send Message 📤</button>
+          </form>
+        </div>
+        
+        <div class="contact-info fade-in">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Email Us</h4>
+              <p>hello@mandatanalytics.com</p>
+              <p style="font-size: 0.9rem; color: var(--text-muted);">Response within 24 hours</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">💼</div>
+            <div>
+              <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">LinkedIn</h4>
+              <p>@MandatAnalytics</p>
+              <p style="font-size: 0.9rem; color: var(--text-muted);">Follow for industry insights</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Location</h4>
+              <p>Kuala Lumpur, Malaysia</p>
+              <p style="font-size: 0.9rem; color: var(--text-muted);">Serving Southeast Asia</p>
+            </div>
+          </div>
+          
+          <div class="contact-item">
+            <div class="contact-icon">🎯</div>
+            <div>
+              <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Free Consultation</h4>
+              <p>Initial project assessment</p>
+              <p style="font-size: 0.9rem; color: var(--text-muted);">No commitment required</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer style="text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--glass-border);">
-    <p>&copy; 2025 Mandat Analytics Sdn. Bhd. | Data That Drives Impact</p>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Mandat Analytics</h4>
+        <p>Transforming data into strategic advantages across Southeast Asia. We specialize in political campaigns, sports analytics, and SME growth strategies.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Services</h4>
+        <p><a href="#services">Consulting Projects</a></p>
+        <p><a href="#services">Retainer Packages</a></p>
+        <p><a href="#services">Dashboards & Tools</a></p>
+        <p><a href="#services">Training & Workshops</a></p>
+      </div>
+      <div class="footer-section">
+        <h4>Industries</h4>
+        <p>Political Campaigns</p>
+        <p>Sports Organizations</p>
+        <p>Small & Medium Enterprises</p>
+        <p>Government Agencies</p>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <p><a href="mailto:hello@mandatanalytics.com">hello@mandatanalytics.com</a></p>
+        <p><a href="#contact">Schedule Consultation</a></p>
+        <p>LinkedIn: @MandatAnalytics</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Mandat Analytics Sdn. Bhd. | Data That Drives Impact | All Rights Reserved</p>
+    </div>
   </footer>
 
   <script>
@@ -643,6 +1259,28 @@
       });
     });
 
+    // Active navigation highlighting
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
     // Intersection Observer for fade-in animations
     const observerOptions = {
       threshold: 0.1,
@@ -668,10 +1306,10 @@
       const timer = setInterval(() => {
         start += increment;
         if (start >= target) {
-          element.textContent = target;
+          element.textContent = target + (target === 95 ? '%' : '');
           clearInterval(timer);
         } else {
-          element.textContent = Math.floor(start);
+          element.textContent = Math.floor(start) + (target === 95 ? '%' : '');
         }
       }, 16);
     }
@@ -690,31 +1328,84 @@
       });
     }, { threshold: 0.5 });
 
-    const statsContainer = document.querySelector('.stats-container');
-    if (statsContainer) {
-      statsObserver.observe(statsContainer);
+    const statsGrid = document.querySelector('.stats-grid');
+    if (statsGrid) {
+      statsObserver.observe(statsGrid);
     }
 
-    // Add some floating particles
-    function createParticle() {
+    // Chart bars animation
+    const chartBarsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const bars = entry.target.querySelectorAll('.chart-bar');
+          bars.forEach((bar, index) => {
+            setTimeout(() => {
+              bar.style.transform = 'scaleY(1)';
+              bar.style.transformOrigin = 'bottom';
+            }, index * 100);
+          });
+          chartBarsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const chartBars = document.querySelector('.chart-bars');
+    if (chartBars) {
+      chartBarsObserver.observe(chartBars);
+    }
+
+    // Floating elements animation
+    const floatingElements = document.querySelectorAll('.floating-element');
+    floatingElements.forEach((element, index) => {
+      element.style.animationDelay = `${index * 2}s`;
+    });
+
+    // Form validation and enhancement
+    const form = document.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.textContent = 'Sending... 📤';
+        submitButton.style.opacity = '0.7';
+      });
+    }
+
+    // Add hover effects to service cards
+    const serviceCards = document.querySelectorAll('.service-card');
+    serviceCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-15px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Enhanced floating particles for light theme
+    function createLightParticle() {
       const particle = document.createElement('div');
+      const colors = ['rgba(59, 130, 246, 0.4)', 'rgba(139, 92, 246, 0.4)', 'rgba(6, 182, 212, 0.4)'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      
       particle.style.cssText = `
         position: fixed;
-        width: 4px;
-        height: 4px;
-        background: rgba(79, 172, 254, 0.6);
+        width: ${2 + Math.random() * 4}px;
+        height: ${2 + Math.random() * 4}px;
+        background: ${randomColor};
         border-radius: 50%;
         pointer-events: none;
         z-index: -1;
         left: ${Math.random() * 100}vw;
         top: 100vh;
-        animation: floatUp ${3 + Math.random() * 4}s linear forwards;
+        animation: floatUp ${4 + Math.random() * 6}s linear forwards;
+        box-shadow: 0 0 ${2 + Math.random() * 4}px ${randomColor};
       `;
       document.body.appendChild(particle);
       
       setTimeout(() => {
         particle.remove();
-      }, 7000);
+      }, 10000);
     }
 
     // Add CSS for particle animation
@@ -722,7 +1413,7 @@
     style.textContent = `
       @keyframes floatUp {
         to {
-          transform: translateY(-100vh) translateX(${Math.random() * 200 - 100}px);
+          transform: translateY(-110vh) translateX(${Math.random() * 300 - 150}px) rotate(360deg);
           opacity: 0;
         }
       }
@@ -730,7 +1421,16 @@
     document.head.appendChild(style);
 
     // Create particles periodically
-    setInterval(createParticle, 2000);
+    setInterval(createLightParticle, 3000);
   </script>
 </body>
 </html>
+
+  <section id="about">
+    <div class="section-container">
+      <div class="section-header fade-in">
+        <div class="section-badge">💡 Our Story</div>
+        <h2 class="section-title">Who We Are</h2>
+        <p class="section-subtitle">
+          A Malaysia-based data consultancy combining machine learning, behavioral science, and sector-specific expertise to deliver transformative business insights.
+        </p>
