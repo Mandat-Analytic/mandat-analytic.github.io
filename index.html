@@ -2034,6 +2034,11 @@ document.addEventListener('DOMContentLoaded', function() {
       showArticlesPage();
       // Update URL without page reload
       history.pushState(null, '', '#articles');
+      // Scroll to top of articles section
+      window.scrollTo({
+        top: document.getElementById('articles').offsetTop - document.getElementById('header').offsetHeight,
+        behavior: 'smooth'
+      });
     });
   }
   
@@ -2050,6 +2055,13 @@ document.addEventListener('DOMContentLoaded', function() {
   if (window.location.hash === '#articles') {
     showArticlesPage();
   }
+  
+  // Close articles page when clicking other nav links
+  document.querySelectorAll('nav a[href^="#"]:not([href="#articles"])').forEach(link => {
+    link.addEventListener('click', function() {
+      hideArticlesPage();
+    });
+  });
 });
 </script>
 
